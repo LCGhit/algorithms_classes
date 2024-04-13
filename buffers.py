@@ -106,20 +106,18 @@ inicio = insOrd(inicio, 2)
 printa(inicio)
 print()
 
+linkedListValues = []
 def invert_list(linkedList):
-    firstValue = linkedList.valor
     if linkedList.prox != None:
-        thisValue = linkedList.valor
-        nextValue = invert_list(linkedList.prox)
-        if (linkedList.valor < nextValue):
-            linkedList.valor = nextValue
-        return thisValue
+        linkedListValues.append(linkedList.valor)
+        invert_list(linkedList.prox)
+        linkedList.valor = linkedListValues[0]
+        linkedListValues.pop(0)
     else:
-        thisValue = linkedList.valor
-        linkedList.valor = 9
-        return thisValue
+        linkedListValues.append(linkedList.valor)
+        linkedList.valor = linkedListValues[0]
+        linkedListValues.pop(0)
+    return linkedList
 
-
-invert_list(inicio)
-print("stuff")
+inicio = invert_list(inicio)
 printa(inicio)
