@@ -119,5 +119,9 @@ def invert_list(linkedList):
         linkedListValues.pop(0)
     return linkedList
 
+
+print("The linked list...")
+printa(inicio)
+print("reversed...")
 inicio = invert_list(inicio)
 printa(inicio)
