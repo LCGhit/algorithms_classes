@@ -18,9 +18,8 @@ def insertBefore(connectedList, element):
     new = Celula(0,element,0)
     connectedList = new
     connectedList.prox = first
-    return(new)
+    return(connectedList)
 
-insertBefore(inicio, 7)
 
 def printa(connectedList):
     if connectedList.prox != 0:
@@ -28,4 +27,9 @@ def printa(connectedList):
         printa(connectedList.prox)
     else:
         print(connectedList.val)
+
+inicio = insertBefore(inicio, 7)
+inicio = insertBefore(inicio, 3)
+inicio = insertBefore(inicio, 9)
+
 printa(inicio)
