@@ -71,12 +71,9 @@ inicio_2 = insertBefore(inicio_2, 2)
 inicio = insertBefore(inicio, 8)
 inicio_2 = insertBefore(inicio_2, 1)
 
-inverted_inicio = invert_list(inicio)
-inverted_inicio_2 = invert_list(inicio_2)
+firstList = invert_list(inicio)
+secondList = invert_list(inicio_2)
+print(printa(firstList), "+", printa(secondList))
 
-firstList = printa(inverted_inicio)
-secondList = printa(inverted_inicio_2)
-print(firstList, "+", secondList)
-
-newVar = sumLists(invert_list(inicio), invert_list(inicio_2), 0)
-print(newVar)
+listsSum = sumLists(invert_list(inicio), invert_list(inicio_2), 0)
+print(listsSum)
