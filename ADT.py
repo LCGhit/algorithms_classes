@@ -52,6 +52,7 @@ print()
 #         print(s.pop())
 
 def stackFun(element):
+    print(element)
     s = Stack(10)
     for i in element:
         try:
@@ -64,20 +65,24 @@ def stackFun(element):
             match i:
                 case "+":
                     operation = operand_2 + operand_1
+                    print(operand_2, "+", operand_1, "=", operation)
                     s.push(operation)
                 case "-":
                     operation = operand_2 - operand_1
+                    print(operand_2, "-", operand_1, "=", operation)
                     s.push(operation)
                 case "/":
                     operation = operand_2 / operand_1
+                    print(operand_2, "/", operand_1, "=", operation)
                     s.push(operation)
                 case "*":
                     operation = operand_2 * operand_1
+                    print(operand_2, "*", operand_1, "=", operation)
                     s.push(operation)
                 case _:
                     return
 
     print(s.peek())
 
-print("result")
-stackFun("8832*-/")
+print("Result:")
+stackFun(input())
