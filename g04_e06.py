@@ -4,8 +4,6 @@ class No:
         self.esq = esq
         self.dir = dir
 
-newList = No(35)
-
 def insOrd(raiz, val):
     if raiz == None:
         return No(val)
@@ -15,27 +13,47 @@ def insOrd(raiz, val):
         raiz.esq = insOrd(raiz.esq, val)
     return raiz
 
-insOrd(newList, 20)
-insOrd(newList, 19)
-insOrd(newList, 21)
-insOrd(newList, 22)
-insOrd(newList, 23)
-
-def printa(list):
+def printAll(list, drawing):
     print(list.valor)
     if list.dir != None:
-        printa(list.dir)
+        drawing = drawing + "  "
+        printAll(list.dir, drawing)
     if list.esq != None:
-        printa(list.esq)
-# printa(newList)
+        drawing = drawing + "  "
+        printAll(list.esq, drawing)
 
-def height(raiz, val):
+newList = No(35)
+for i in [20,21,22,23,10,9,8,7,19,18,17,16,15,40,41,39]:
+    insOrd(newList, i)
+
+def treeHeight(root):
     count = 0
-    if raiz == None:
+    if root == None:
         return 0
-    if val > raiz.valor:
-        count = 1+height(raiz.dir, val)
+    countRight = 1+treeHeight(root.dir)
+    countLeft = 1+treeHeight(root.esq)
+    if countRight > countLeft:
+        count = countRight
     else:
-        count = 1+height(raiz.esq, val)
+        count = countLeft
     return count
-print(height(newList, 4))
+# print(treeHeight(newList))
+
+def countNodes(root, node):
+    count = ""
+    if root == None:
+        return ""
+    if node > 1:
+        count = str(countNodes(root.esq, node-1)) + " "*5
+        count = count + str(countNodes(root.dir, node-1))
+    else:
+        return root.valor
+    return count
+
+def printTree(tree):
+    count = 20
+    for i in range(1, treeHeight(tree)+1):
+        print(" "*count, countNodes(tree, i))
+        count = count - 4
+
+printTree(newList)
