@@ -56,9 +56,9 @@ def printTree(tree):
         print(" "*count, countNodes(tree, i))
         count = count - 4
 
-print("###THE TREE###")
+print("THE TREE\n")
 printTree(newList)
-print("LVL 3 NODES:")
+print("\nLVL 3 NODES:")
 print(countNodes(newList, 3))
-print("TREE HEIGHT:")
+print("\nTREE HEIGHT:")
 print(treeHeight(newList))
