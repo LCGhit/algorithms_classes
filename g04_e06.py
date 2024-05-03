@@ -58,7 +58,8 @@ def printTree(tree):
 
 print("THE TREE\n")
 printTree(newList)
-print("\nLVL 3 NODES:")
-print(countNodes(newList, 3))
+lvl = input("What level would you like to see?\n=> ")
+print("\nLVL " + lvl + " NODES:")
+print(countNodes(newList, int(lvl)))
 print("\nTREE HEIGHT:")
 print(treeHeight(newList))
