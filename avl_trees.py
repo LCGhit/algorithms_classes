@@ -142,19 +142,19 @@ print(pre_ordem(raiz,[]))
 print()
 
 raiz_standard = insOrd(None,5)
-raiz_standard = insOrd(raiz,1)
-raiz_standard = insOrd(raiz,6)
-raiz_standard = insOrd(raiz,7)
-raiz_standard = insOrd(raiz,10)
-raiz_standard = insOrd(raiz,8)
-raiz_standard = insOrd(raiz,12)
-raiz_standard = insOrd(raiz,14)
-raiz_standard = insOrd(raiz,15)
-raiz_standard = insOrd(raiz,16)
-raiz_standard = insOrd(raiz,17)
-raiz_standard = insOrd(raiz,2)
+raiz_standard = insOrd(raiz_standard,1)
+raiz_standard = insOrd(raiz_standard,6)
+raiz_standard = insOrd(raiz_standard,7)
+raiz_standard = insOrd(raiz_standard,10)
+raiz_standard = insOrd(raiz_standard,8)
+raiz_standard = insOrd(raiz_standard,12)
+raiz_standard = insOrd(raiz_standard,14)
+raiz_standard = insOrd(raiz_standard,15)
+raiz_standard = insOrd(raiz_standard,16)
+raiz_standard = insOrd(raiz_standard,17)
+raiz_standard = insOrd(raiz_standard,2)
 print("Standard")
-print(pre_ordem(raiz,[]))
+print(pre_ordem(raiz_standard,[]))
 
 
 def treeHeight(root):
@@ -186,3 +186,11 @@ def printTree(tree):
     for i in range(1, treeHeight(tree)+1):
         print(" "*count, countNodes(tree, i))
         count = count - 4
+
+for i in range(0, treeHeight(raiz)+1):
+        print("\nAVL Tree:")
+        printTree(raiz)
+        print("Height:" , treeHeight(raiz))
+        print("\nStandard Tree:")
+        printTree(raiz_standard)
+        print("Height:" , treeHeight(raiz_standard))
