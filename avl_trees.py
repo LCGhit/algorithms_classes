@@ -188,9 +188,15 @@ def printTree(tree):
         count = count - 4
 
 for i in range(0, treeHeight(raiz)+1):
+        print("#"*50)
         print("\nAVL Tree:")
         printTree(raiz)
         print("Height:" , treeHeight(raiz))
+        print("#"*50)
+        print("\n")
+        print("#"*50)
         print("\nStandard Tree:")
         printTree(raiz_standard)
         print("Height:" , treeHeight(raiz_standard))
+        print("#"*50)
+        print("\n")
