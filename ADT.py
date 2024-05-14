@@ -84,5 +84,4 @@ def stackFun(element):
 
     print(s.peek())
 
-print("Result:")
-stackFun(input())
+stackFun(input("Write expression:\n"))
