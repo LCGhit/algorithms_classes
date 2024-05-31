@@ -36,23 +36,23 @@ def loadFactor(connectedList):
         load = 1 + loadFactor(connectedList.next)
     return load
 
-def hashFun_1(input):
+def hashFun_1(input, table):
     if not isinstance(input, int):
         num = 0
         for l in input:
             num = num + ord(l) - 96
-        return num//3
+        return num%len(table)
     else:
-        return input//3
+        return input%len(table)
 
-def hashFun_2(input):
+def hashFun_2(input, table):
     if not isinstance(input, int):
         num = 0
         for l in input:
             num = num + ord(l) - 96
-        return num%3
+        return num*4%len(table)
     else:
-        return input%3
+        return input*4%len(table)
 
 def solveCollision(list, item):
     if list.next == None:
@@ -66,7 +66,7 @@ def solveCollision(list, item):
     return list
 
 def addItem(array, key, value, hashFunction):
-    address = hashFunction(key)
+    address = hashFunction(key, array)
     if array[address] == None:
         array[address] = Celula(key, value, 0, None)
     else:
@@ -79,16 +79,6 @@ def printTable(array):
             print("\nIndex:", count, "\n", printa(array[count]))
         count += 1
 
-def getLoadFactor(array):
-    add = 0
-    count = 0
-    for i in array:
-        if i != None:
-            add = add+loadFactor(array[count])
-        count += 1
-    print(add/len(array))
-    return add/len(array)
-
 def searchCollision(list, key):
     if list.key == key:
         return list
@@ -96,7 +86,7 @@ def searchCollision(list, key):
         return searchCollision(list.next, key)
 
 def search(array, key):
-    address = hashFun_1(key)
+    address = hashFun_1(key, array)
     if array[address] == None:
         return None
     elif array[address].key != key:
@@ -112,16 +102,16 @@ def delete(array, key):
 def listDifference():
     print("\nFIRST DICT")
     closedAddr_1 = [None] *30
-    addItem(closedAddr_1, "abc", "First", hashFun_1)
-    addItem(closedAddr_1, "cba", "Second", hashFun_1)
-    addItem(closedAddr_1, "bca", "Third", hashFun_1)
-    addItem(closedAddr_1, "aaa", "Fourth", hashFun_1)
-    addItem(closedAddr_1, "ccb", "Fifth", hashFun_1)
-    addItem(closedAddr_1, "arst", "Sixth", hashFun_1)
-    addItem(closedAddr_1, "tst", "Seventh", hashFun_1)
-    addItem(closedAddr_1, "oie", "Eighth", hashFun_1)
-    addItem(closedAddr_1, "ennn", "Ninth", hashFun_1)
-    addItem(closedAddr_1, "ontl", "Tenth", hashFun_1)
+    addItem(closedAddr_1, "Glass", "First", hashFun_1)
+    addItem(closedAddr_1, "Plate", "Second", hashFun_1)
+    addItem(closedAddr_1, "Table", "Third", hashFun_1)
+    addItem(closedAddr_1, "Cupboard", "Fourth", hashFun_1)
+    addItem(closedAddr_1, "Wall", "Fifth", hashFun_1)
+    addItem(closedAddr_1, "Ceiling", "Sixth", hashFun_1)
+    addItem(closedAddr_1, "Chair", "Seventh", hashFun_1)
+    addItem(closedAddr_1, "Sofa", "Eighth", hashFun_1)
+    addItem(closedAddr_1, "Lamp", "Ninth", hashFun_1)
+    addItem(closedAddr_1, "Rug", "Tenth", hashFun_1)
     printTable(closedAddr_1)
 
     print("\nSECOND DICT")
@@ -138,23 +128,12 @@ def listDifference():
     addItem(closedAddr_2, "Beatriz", "Tenth", hashFun_1)
     printTable(closedAddr_2)
 
-def addDelete():
-    closedAddr_1 = [None] *30
-    addItem(closedAddr_1, "abc", "First", hashFun_1)
-    addItem(closedAddr_1, "cba", "Second", hashFun_1)
-    addItem(closedAddr_1, "bca", "Third", hashFun_1)
-    addItem(closedAddr_1, "aaa", "Fourth", hashFun_1)
-    addItem(closedAddr_1, "ccb", "Fifth", hashFun_1)
-    addItem(closedAddr_1, "arst", "Sixth", hashFun_1)
-    addItem(closedAddr_1, "tst", "Seventh", hashFun_1)
-    addItem(closedAddr_1, "oie", "Eighth", hashFun_1)
-    addItem(closedAddr_1, "ennn", "Ninth", hashFun_1)
-    addItem(closedAddr_1, "ontl", "Tenth", hashFun_1)
-    printTable(closedAddr_1)
-    delete(closedAddr_1, "bca")
-    printTable(closedAddr_1)
-    addItem(closedAddr_1, "bca", "NEWONE", hashFun_1)
-    printTable(closedAddr_1)
+def addDelete(array, key):
+    printTable(array)
+    delete(array, key)
+    printTable(array)
+    addItem(array, key, "NEWONE", hashFun_1)
+    printTable(array)
 
 numArr = [3,55,2,98,2,4,61,44,53,22,34,70,1,86]
 
@@ -169,33 +148,55 @@ def hashDifference(array, hash1, hash2):
     print("\n##########HASH 2##########")
     printTable(arr2)
 
+def getLoadFactor(array):
+    add = 0
+    count = 0
+    for i in array:
+        if i != None:
+            add = add+loadFactor(array[count])
+        count += 1
+    print(add/len(array))
+    return add/len(array)
+
+def reInsertList(list, newArr):
+    if list.next != None:
+        reInsertList(list.next, newArr)
+    else:
+        return addItem(newArr, list.key, list.val, hashFun_1)
+
+    return addItem(newArr, list.key, list.val, hashFun_1)
+
 def rehash(array):
-    newArr = [None]*(len(array)+50)
+    newArr = [None]*(len(array)*2)
     if getLoadFactor(array) > 0.4:
         count = 0
         for i in array:
-            newArr[count] = i
+            if i != None:
+                print(count)
+                reInsertList(array[count], newArr)
             count += 1
+    else:
+        return array
     return newArr
 
-a = [None]*25
-addItem(a, "abc", "First", hashFun_1)
-addItem(a, "cba", "Second", hashFun_1)
-addItem(a, "cc", "Second", hashFun_1)
-addItem(a, 5, "Second", hashFun_1)
-addItem(a, "bca", "Third", hashFun_1)
-addItem(a, "aaa", "Fourth", hashFun_1)
-addItem(a, "ccb", "Fifth", hashFun_1)
-addItem(a, "arst", "Sixth", hashFun_1)
-addItem(a, "tst", "Seventh", hashFun_1)
-addItem(a, "oie", "Eighth", hashFun_1)
-addItem(a, "ennn", "Ninth", hashFun_1)
-addItem(a, "ontl", "Tenth", hashFun_1)
+listClosedAddr = [None] *25
+addItem(listClosedAddr, "Ana", "First", hashFun_1)
+addItem(listClosedAddr, "Maria", "Second", hashFun_1)
+addItem(listClosedAddr, "Antonio", "Third", hashFun_1)
+addItem(listClosedAddr, "Jose", "Fourth", hashFun_1)
+addItem(listClosedAddr, "Joao", "Fifth", hashFun_1)
+addItem(listClosedAddr, "Pedro", "Sixth", hashFun_1)
+addItem(listClosedAddr, "Patricia", "Seventh", hashFun_1)
+addItem(listClosedAddr, "Joana", "Eighth", hashFun_1)
+addItem(listClosedAddr, "Ines", "Ninth", hashFun_1)
+addItem(listClosedAddr, "Beatriz", "Tenth", hashFun_1)
+addItem(listClosedAddr, "Alexandre", "Eleventh", hashFun_1)
+
 
 #listDifference()
-#addDelete()
+#addDelete(listClosedAddr, "Joao")
 #hashDifference(numArr, hashFun_1, hashFun_2)
-#search(a, "ccb")
-#getLoadFactor(a)
-#a = rehash(a)
-#getLoadFactor(a)
+#search(listClosedAddr, "Jose")
+#printTable(listClosedAddr)
+#listClosedAddr = rehash(listClosedAddr)
+#printTable(listClosedAddr)
